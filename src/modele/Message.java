@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * Created by 1494778 on 2016-01-14.
+ * Created by fabienne et gabriel on 2016-01-14.
  */
 public class Message {
     private String nom,imageURL, message, source;
