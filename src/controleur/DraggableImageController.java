@@ -10,8 +10,6 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import modele_TP1.Context;
-import modele_TP1.Mot;
 
 import java.net.URL;
 import java.util.ResourceBundle;
