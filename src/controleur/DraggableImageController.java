@@ -1,7 +1,7 @@
 package controleur;
 
 /**
- * Created by fabienne on 2016-01-05.
+ * Created by fabienne et gabriel on 2016-01-14.
  */
 
 import javafx.fxml.FXML;
@@ -16,18 +16,8 @@ import java.util.ResourceBundle;
 
 public class DraggableImageController implements Initializable{
 
-
-
         @FXML
         private ImageView imageView;
-
-        private Dragboard dragBoard;
-
-        private String urlImage;
-
-
-
-
 
         @FXML
         void dragDetected(MouseEvent event) {
