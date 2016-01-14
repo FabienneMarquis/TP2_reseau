@@ -1,0 +1,38 @@
+
+ 
+/**
+    Document   : controlStyle2
+    Modifier par Fabienne Marquis
+**/
+
+
+.root{
+    -fx-font-size: 12pt;
+    -fx-font-family: "Rockwell";
+    -fx-base: rgb(64, 164, 151);
+    -fx-background: rgb(195, 195, 195);
+}
+ 
+.button{
+    -fx-text-fill: rgb(49, 89, 23);
+    -fx-border-color: rgb(49, 89, 23);
+    -fx-border-radius: 5;
+    -fx-padding: 10 6 6 6;
+}
+ 
+.borders{
+    -fx-border-color: rgb(146, 165, 163);
+    -fx-border-style: dotted;
+    -fx-border-width: 1.5;
+    -fx-border-insets: -5;
+}
+
+.imageview{
+	-fx-border-color: rgb(61, 103, 97);
+    -fx-border-width: 1.5;
+	
+}
+
+.textfield{
+	-fx-padding: 10 6 6 6;
+}
