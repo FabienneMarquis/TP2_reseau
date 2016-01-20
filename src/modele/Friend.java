@@ -1,7 +1,55 @@
 package modele;
 
+import java.io.Serializable;
+
 /**
  * Created by 0940135 on 2016-01-19.
  */
-public class Friend {
+public class Friend implements Serializable {
+    private String nom,imageBase64,ip;
+    private int port;
+
+    public Friend(String nom, String imageBase64, String ip, int port) {
+        this.nom = nom;
+        this.imageBase64 = imageBase64;
+        this.ip = ip;
+        this.port = port;
+    }
+
+    public Friend(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
 }
