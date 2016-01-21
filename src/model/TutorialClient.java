@@ -1,4 +1,4 @@
-package modele;
+package model;
 import java.net.*;
 import java.io.*;
 import java.util.*;

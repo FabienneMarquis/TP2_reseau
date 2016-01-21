@@ -1,23 +1,28 @@
-package controleur;
+package controller;
 
 /**
- * Created by fabienne et gabriel on 2016-01-14.
+ * Created by fabienne et Gabriel on 2016-01-05.
  */
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import model.LocatedImage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DraggableImageController implements Initializable{
 
+
+
         @FXML
         private ImageView imageView;
+
+        private Dragboard dragBoard;
+
+        private String urlImage;
 
         @FXML
         void dragDetected(MouseEvent event) {
@@ -54,9 +59,13 @@ public class DraggableImageController implements Initializable{
             Dragboard db = event.getDragboard();
             boolean success = false;
             if (db.hasUrl()) {
-                imageView.setImage(new Image(db.getUrl()));
+                System.out.println(db.getUrl());
+                imageView.setImage(new LocatedImage(db.getUrl()));
                 success = true;
+            }else if (db.hasFiles()){
+                System.out.println(db.getFiles().get(0).getAbsolutePath());
             }
+            System.out.println(db.getString());
                 /* let the source know whether the string was successfully
                  * transferred and used */
             event.setDropCompleted(success);
@@ -68,10 +77,10 @@ public class DraggableImageController implements Initializable{
         void dragEntered(DragEvent  event) {
 
             /* the drag-and-drop gesture entered the target */
-
+            System.out.println(event.getDragboard().hasFiles());
                 /* show to the user that it is an actual gesture target */
-            if (event.getGestureSource() != imageView &&
-                    event.getDragboard().hasString()) {
+            if (event.getGestureSource() != imageView &&(
+                    event.getDragboard().hasString() || event.getDragboard().hasFiles())) {
                 ColorAdjust colorAdjust = new ColorAdjust();
                 colorAdjust.setBrightness(0.5);
                 imageView.setEffect(colorAdjust);
@@ -97,7 +106,7 @@ public class DraggableImageController implements Initializable{
                 /* accept it only if it is  not dragged from the same node
                  * and if it has a string data */
             if (event.getGestureSource() != imageView &&
-                    event.getDragboard().hasString()) {
+                    (event.getDragboard().hasString() || event.getDragboard().hasFiles())) {
                     /* allow for both copying and moving, whatever user chooses */
                 event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
@@ -106,7 +115,6 @@ public class DraggableImageController implements Initializable{
         }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
 
     }
 }

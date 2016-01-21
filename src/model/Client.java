@@ -1,7 +1,6 @@
-package modele;
+package model;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Observable;
 
@@ -13,17 +12,17 @@ public class Client extends Observable{
     private Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
-    private Friend friend;
+    private User user;
     private boolean connected;
 
-    public Client(Friend friend) {
-        this.friend = friend;
+    public Client(User user) {
+        this.user = user;
         connected = false;
     }
 
     private boolean connect() {
         try {
-            socket = new Socket(friend.getIp(), friend.getPort());
+            socket = new Socket(user.getIp(), user.getPort());
         }
         // if it failed not much I can so
         catch (Exception ec) {
@@ -36,8 +35,9 @@ public class Client extends Observable{
 
 		/* Creating both Data Stream */
         try {
-            outputStream = new ObjectOutputStream(socket.getOutputStream());
+
             inputStream = new ObjectInputStream(socket.getInputStream());
+            outputStream = new ObjectOutputStream(socket.getOutputStream());
 
         } catch (IOException eIO) {
             display("Exception creating new Input/output Streams: " + eIO);

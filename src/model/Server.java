@@ -1,13 +1,11 @@
-package modele;
+package model;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Properties;
 
@@ -41,8 +39,9 @@ public class Server extends Observable {
         try {
             clientSocket = serverSocket.accept();
             try {
-                outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
                 inputStream = new ObjectInputStream(clientSocket.getInputStream());
+                outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+
 
                 display("Client connected from " + clientSocket.getInetAddress().getHostAddress());
 

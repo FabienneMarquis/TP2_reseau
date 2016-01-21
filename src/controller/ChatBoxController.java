@@ -1,4 +1,4 @@
-package controleur;
+package controller;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -9,21 +9,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.WindowEvent;
-import modele.Client;
-import modele.Friend;
-import modele.Message;
-import modele.Server;
+import model.Client;
+import model.User;
+import model.Message;
+import model.Server;
+import model.ClientThread;
 
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
  * Created by 1494778 on 2016-01-14.
  */
-public class ControleurFXML implements Initializable, Observer{
+public class ChatBoxController implements Initializable, Observer{
 
 
     @FXML
@@ -81,14 +81,14 @@ public class ControleurFXML implements Initializable, Observer{
         System.out.println("wut?");
 //        if(client == null){
 //            new Thread(()->{
-//                Friend friend = );
+//                User friend = );
 //                client = new Client(friend);
 //                client.addObserver(this);
 //                client.reconnect();
 //            }).start();
 //
 //        }
-        clientThread = new ClientThread(new Friend(ipDistant.getText(), Integer.valueOf(portDistant.getText())));
+        clientThread = new ClientThread(new User(ipDistant.getText(), Integer.valueOf(portDistant.getText())));
         clientThread.getClient().addObserver(this);
         clientThread.start();
 
@@ -140,19 +140,5 @@ public class ControleurFXML implements Initializable, Observer{
     public void setServer(Server server){
         this.server = server;
     }
-    class ClientThread extends Thread{
-        Client client;
-        public ClientThread(Friend friend){
-            client = new Client(friend);
-        }
-        public void run(){
-            client.reconnect();
-        }
-        public void sendMsg(Message msg){
-            client.sendMessage(msg);
-        }
-        public Client getClient(){
-            return client;
-        }
-    }
+
 }
