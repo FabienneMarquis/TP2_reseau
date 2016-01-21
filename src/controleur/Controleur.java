@@ -43,11 +43,12 @@ public class Controleur extends Application implements Initializable{
 
         scene = new Scene(root);
         server = new Server();
-        new Thread(()->{
+        server.addObserver(fxmlLoader.getController());
+        new Thread(()-> {
 
             server.start();
         }).start();
-        server.addObserver(fxmlLoader.getController());
+
 
         ((ControleurFXML)fxmlLoader.getController()).setServer(server);
         primaryStage.setTitle("Best Messenger");

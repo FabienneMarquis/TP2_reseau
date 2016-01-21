@@ -75,18 +75,22 @@ public class ControleurFXML implements Initializable, Observer{
             .synchronizedObservableList(FXCollections.observableArrayList());
     private Server server;
     private Client client;
+    private ClientThread clientThread;
     @FXML
     void connection(ActionEvent event) {
         System.out.println("wut?");
-        if(client == null){
-            new Thread(()->{
-                Friend friend = new Friend(ipDistant.getText(), Integer.valueOf(portDistant.getText()));
-                client = new Client(friend);
-                client.addObserver(this);
-                client.reconnect();
-            }).start();
-
-        }
+//        if(client == null){
+//            new Thread(()->{
+//                Friend friend = );
+//                client = new Client(friend);
+//                client.addObserver(this);
+//                client.reconnect();
+//            }).start();
+//
+//        }
+        clientThread = new ClientThread(new Friend(ipDistant.getText(), Integer.valueOf(portDistant.getText())));
+        clientThread.getClient().addObserver(this);
+        clientThread.start();
 
     }
 
@@ -102,10 +106,8 @@ public class ControleurFXML implements Initializable, Observer{
             System.out.println("message envoyer au client");
             server.sendMessage(new Message(Message.MESSAGE,messageEnvoyer.getText()));
         }
-        else if(client.isConnected()){
-            System.out.println("message envoyer au server");
-            client.sendMessage(new Message(Message.MESSAGE,messageEnvoyer.getText()));
-        }
+        else if(clientThread.getClient().isConnected())
+            clientThread.sendMsg(new Message(Message.MESSAGE,messageEnvoyer.getText()));
     }
 
     @FXML
@@ -137,5 +139,20 @@ public class ControleurFXML implements Initializable, Observer{
 
     public void setServer(Server server){
         this.server = server;
+    }
+    class ClientThread extends Thread{
+        Client client;
+        public ClientThread(Friend friend){
+            client = new Client(friend);
+        }
+        public void run(){
+            client.reconnect();
+        }
+        public void sendMsg(Message msg){
+            client.sendMessage(msg);
+        }
+        public Client getClient(){
+            return client;
+        }
     }
 }

@@ -41,8 +41,9 @@ public class Server extends Observable {
         try {
             clientSocket = serverSocket.accept();
             try {
-                inputStream = new ObjectInputStream(clientSocket.getInputStream());
                 outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                inputStream = new ObjectInputStream(clientSocket.getInputStream());
+
                 display("Client connected from " + clientSocket.getInetAddress().getHostAddress());
 
                 startListening();
@@ -78,27 +79,27 @@ public class Server extends Observable {
             if (inputStream != null)
                 inputStream.close();
         } catch (IOException e) {
-            disconnected();
+            disconnected(e);
         }// Not much to do
         try {
             if (outputStream != null)
                 outputStream.close();
         } catch (IOException e) {
-            disconnected();
+            disconnected(e);
         }// Not much to do
         try {
             if (clientSocket != null)
                 clientSocket.close();
         } catch (IOException e) {
-            disconnected();
+            disconnected(e);
         }// Not much to do
         try {
             if (serverSocket != null)
                 serverSocket.close();
         } catch (IOException e) {
-            disconnected();
+            disconnected(e);
         }// Not much to do
-        disconnected();
+        //disconnected();
     }
 
     public void sendMessage(Message message) {
@@ -108,7 +109,7 @@ public class Server extends Observable {
                 setChanged();
                 notifyObservers(message);
             } catch (IOException e) {
-                disconnected();
+                disconnected(e);
             }
         }
     }
@@ -120,11 +121,13 @@ public class Server extends Observable {
             while (!clientSocket.isClosed()) {
 
                 try {
+                    System.out.println("server received msg");
+                    Message msg = (Message) inputStream.readObject();
                     setChanged();
-                    notifyObservers(inputStream.readObject());
+                    notifyObservers(msg);
                 } catch (IOException e) {
                     // Server disconnected
-                    disconnected();
+                    disconnected(e);
                 } catch (ClassNotFoundException e) {
                     // Not much to do...
                 }
@@ -135,9 +138,10 @@ public class Server extends Observable {
 
     }
 
-    private void disconnected() {
-        notifyObservers("DISCONNECTED");
+    private void disconnected(Exception e) {
         setChanged();
+        notifyObservers("DISCONNECTED: " + e);
+
     }
 
     public boolean hasConnection() {

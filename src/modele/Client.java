@@ -8,7 +8,7 @@ import java.util.Observable;
 /**
  * Created by Fabienne et Gabriel on 2016-01-14.
  */
-public class Client extends Observable {
+public class Client extends Observable{
 
     private Socket socket;
     private ObjectOutputStream outputStream;
@@ -36,8 +36,9 @@ public class Client extends Observable {
 
 		/* Creating both Data Stream */
         try {
-            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
+
         } catch (IOException eIO) {
             display("Exception creating new Input/output Streams: " + eIO);
             return false;
@@ -95,7 +96,10 @@ public class Client extends Observable {
             while (!socket.isClosed()) {
 
                 try {
-                    notifyObservers(inputStream.readObject());
+                    System.out.println("client received msg");
+                    Message msg = (Message) inputStream.readObject();
+                    setChanged();
+                    notifyObservers(msg);
                 } catch (IOException e) {
                     // Server disconnected
                     disconnected();
