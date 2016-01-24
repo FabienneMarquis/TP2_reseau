@@ -37,54 +37,38 @@ public class AppController extends Application implements Initializable {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        loadChatBox(primaryStage);
-        loadCreateUser(new Stage());
+        loadCreateUser(primaryStage);
 
-        primaryStage.setOnCloseRequest((WindowEvent event) -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Avertissement");
-            alert.setHeaderText("Quitter?");
-            alert.setContentText("Voulez-vous quitter le programme de messages instantanés ");
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.get() == ButtonType.OK) {
-                if(Context.getInstance().getServerThread()!=null)
-                    Context.getInstance().getServerThread().getServer().close();
-                Platform.exit();
-                System.exit(0);
-            } else event.consume();
-        });
+        primaryStage.setOnCloseRequest(AppController::close);
 
     }
-    private void loadChatBox(Stage primaryStage) {
-        String path = "/view/chatBox.fxml";
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                path));
-        try {
-            root = fxmlLoader.load();
-            Scene scene = new Scene(root);
+    private static void close(WindowEvent event){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Avertissement");
+        alert.setHeaderText("Quitter?");
+        alert.setContentText("Voulez-vous quitter le programme de messages instantanés ");
+        Optional<ButtonType> result = alert.showAndWait();
 
-
-            primaryStage.setTitle("Best Messenger");
-            primaryStage.setScene(scene);
-
-        } catch (IOException e) {
-            System.out.println("ERROR with FXML");
-        }
-
-
-
+        if (result.get() == ButtonType.OK) {
+            if(Context.getInstance().getServerThread()!=null)
+                Context.getInstance().getServerThread().getServer().close();
+            Platform.exit();
+            System.exit(0);
+        } else event.consume();
     }
+
     private void loadCreateUser(Stage primaryStage) {
         String path = "/view/createUser.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
                 path));
+
         BorderPane root;
         try {
             root = fxmlLoader.load();
             scene = new Scene(root);
 
-
+            CreateUserController createUserController = fxmlLoader.getController();
+            createUserController.setStage(primaryStage);
             primaryStage.setTitle("Best Messenger");
             primaryStage.setScene(scene);
 
@@ -92,6 +76,7 @@ public class AppController extends Application implements Initializable {
 
         } catch (IOException e) {
             System.out.println("ERROR with FXML");
+            e.printStackTrace();
         }
 
 

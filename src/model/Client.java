@@ -35,15 +35,15 @@ public class Client extends Observable{
 
 		/* Creating both Data Stream */
         try {
-
-            inputStream = new ObjectInputStream(socket.getInputStream());
             outputStream = new ObjectOutputStream(socket.getOutputStream());
+            inputStream = new ObjectInputStream(socket.getInputStream());
+
 
         } catch (IOException eIO) {
             display("Exception creating new Input/output Streams: " + eIO);
             return false;
         }
-
+        sendUserInfo(Context.getInstance().getUser());
         // creates the Thread to listen from the server
         startListening();
 
@@ -76,6 +76,17 @@ public class Client extends Observable{
         disconnected();
     }
 
+    public void sendUserInfo(User user){
+        if (isConnected()) {
+            try {
+                System.out.println(user.getNom());
+                outputStream.writeObject(user);
+            } catch (IOException e) {
+                System.out.println("outputStream closed");
+                disconnected();
+            }
+        }
+    }
     public void sendMessage(Message message) {
         if (isConnected()) {
             try {
@@ -97,9 +108,8 @@ public class Client extends Observable{
 
                 try {
                     System.out.println("client received msg");
-                    Message msg = (Message) inputStream.readObject();
-                    setChanged();
-                    notifyObservers(msg);
+                    Object object = (Object) inputStream.readObject();
+                    display(object);
                 } catch (IOException e) {
                     // Server disconnected
                     disconnected();
@@ -114,6 +124,15 @@ public class Client extends Observable{
     }
 
     private void disconnected() {
+        try{
+            socket.close();
+        }catch (IOException e1) {}
+        try{
+            outputStream.close();
+        }catch (IOException e1) {}
+        try{
+            inputStream.close();
+        }catch (IOException e1) {}
         setChanged();
         notifyObservers("DISCONNECTED");
     }
@@ -123,9 +142,10 @@ public class Client extends Observable{
         return !socket.isClosed();
     }
 
-    private void display(String msg) {
+    private void display(Object object) {
+        System.out.println(object);
         setChanged();
-        notifyObservers(msg);
+        notifyObservers(object);
     }
 
 }

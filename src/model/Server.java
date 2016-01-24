@@ -26,10 +26,16 @@ public class Server extends Observable {
         notifyObservers(msg);
     }
 
-    public Server() {}
+    public Server() {
+        this.port = getPortFromProperties();
+    }
+
+    public Server(int port){
+        this.port = port;
+    }
     public void start(){
 
-        this.port = getPortFromProperties();
+
         try {
             serverSocket = new ServerSocket(port);
             display("Server connected to port " + port + " and waiting");
@@ -38,17 +44,20 @@ public class Server extends Observable {
         }
         try {
             clientSocket = serverSocket.accept();
+            System.out.println("huh?");
             try {
-                inputStream = new ObjectInputStream(clientSocket.getInputStream());
                 outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+                inputStream = new ObjectInputStream(clientSocket.getInputStream());
 
+                System.out.println("wtf?");
 
                 display("Client connected from " + clientSocket.getInetAddress().getHostAddress());
 
                 startListening();
 
-            } catch (IOException e) {
+            } catch (Exception e) {
                 display("Exception creating new Input/output Streams: " + e);
+                e.printStackTrace();
             }
         } catch (IOException e) {
             display("error creating ServerSocket");
@@ -121,9 +130,11 @@ public class Server extends Observable {
 
                 try {
                     System.out.println("server received msg");
-                    Message msg = (Message) inputStream.readObject();
-                    setChanged();
-                    notifyObservers(msg);
+                    Object obj = inputStream.readObject();
+                    if(obj instanceof User)
+                        sendUserInfo();
+                    display(obj);
+
                 } catch (IOException e) {
                     // Server disconnected
                     disconnected(e);
@@ -138,6 +149,15 @@ public class Server extends Observable {
     }
 
     private void disconnected(Exception e) {
+        try{
+            clientSocket.close();
+        }catch (IOException e1) {}
+        try{
+            outputStream.close();
+        }catch (IOException e1) {}
+        try{
+            inputStream.close();
+        }catch (IOException e1) {}
         setChanged();
         notifyObservers("DISCONNECTED: " + e);
 
@@ -145,5 +165,23 @@ public class Server extends Observable {
 
     public boolean hasConnection() {
         return clientSocket != null;
+    }
+
+    private void display(Object object){
+        System.out.println(object);
+        if(object instanceof User || object instanceof Message || object instanceof String){
+            setChanged();
+            notifyObservers(object);
+        }
+    }
+
+
+    private void sendUserInfo(){
+        try{
+            outputStream.writeObject(Context.getInstance().getUser());
+        }catch (IOException e){
+            System.out.println("ERROR: connection");
+        }
+
     }
 }

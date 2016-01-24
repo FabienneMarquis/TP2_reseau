@@ -7,11 +7,13 @@ import javafx.scene.image.Image;
  */
 public class LocatedImage extends Image {
     private final String url;
+    //private final String base64;
+
 
     /**
      * cette méthode permet de créer l'objet locatedImage et d'y associer un URL
      * @param url
-     */
+    */
     public LocatedImage(String url) {
         super(url);
         this.url = url;

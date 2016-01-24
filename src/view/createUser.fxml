@@ -5,8 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUserController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CreateUserController">
    <top>
       <Label text="Create User" BorderPane.alignment="CENTER">
          <padding>
@@ -31,23 +30,28 @@
       </HBox>
    </bottom>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="184.0" minHeight="0.0" prefHeight="166.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="177.0" minHeight="0.0" prefHeight="49.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <Pane maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="borders" GridPane.columnIndex="1">
                <children>
-                  <Label text="Username" />
-                  <TextField fx:id="username" />
+                  <fx:include fx:id="image" source="DraggableImage.fxml" />
                </children>
-            </HBox>
-            <Pane prefHeight="150.0" prefWidth="150.0" styleClass="borders">
-               <children>
-                  <fx:include source="DraggableImage.fxml" fx:id="image"/>
-               </children>
-               <HBox.margin>
-                  <Insets bottom="10.0" right="75.0" top="10.0" />
-               </HBox.margin>
             </Pane>
+            <Label text="Username" GridPane.rowIndex="1" />
+            <TextField fx:id="usernamefield" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Profile Picture (drag and drop picture on the field)" />
+            <Label text="Port (optional)" GridPane.rowIndex="2" />
+            <TextField fx:id="portfield" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
-      </VBox>
+      </GridPane>
    </center>
 </BorderPane>

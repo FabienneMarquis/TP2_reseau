@@ -9,11 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.WindowEvent;
-import model.Client;
-import model.User;
-import model.Message;
-import model.Server;
-import model.ClientThread;
+import model.*;
 
 import java.net.URL;
 import java.util.Observable;
@@ -39,7 +35,7 @@ public class ChatBoxController implements Initializable, Observer{
     private TextField nomUtilisateur;
 
     @FXML
-    private ImageView imageView;
+    private ImageView userImg;
 
     @FXML
     private ListView<String> listViewConversation;
@@ -73,8 +69,7 @@ public class ChatBoxController implements Initializable, Observer{
 
     private ObservableList<String> messagesClient = FXCollections
             .synchronizedObservableList(FXCollections.observableArrayList());
-    private Server server;
-    private Client client;
+
     private ClientThread clientThread;
     @FXML
     void connection(ActionEvent event) {
@@ -102,12 +97,12 @@ public class ChatBoxController implements Initializable, Observer{
     @FXML
     void envoyerMSG(ActionEvent event) {
         System.out.println("envoyer");
-        if (server.hasConnection()){
+        if (Context.getInstance().getServerThread().getServer().hasConnection()){
             System.out.println("message envoyer au client");
-            server.sendMessage(new Message(Message.MESSAGE,messageEnvoyer.getText()));
+            Context.getInstance().getServerThread().getServer().sendMessage(new Message(Context.getInstance().getUser().getIp(), messageEnvoyer.getText()));
         }
         else if(clientThread.getClient().isConnected())
-            clientThread.sendMsg(new Message(Message.MESSAGE,messageEnvoyer.getText()));
+            clientThread.sendMsg(new Message(Context.getInstance().getUser().getIp(),messageEnvoyer.getText()));
     }
 
     @FXML
@@ -121,24 +116,44 @@ public class ChatBoxController implements Initializable, Observer{
 
         listViewInfoServeur.setItems(messagesServer);
         listViewConversation.setItems(messagesClient);
+        nomUtilisateur.setText(Context.getInstance().getUser().getNom());
+        userImg.setImage(Base64ImageFactory.getInstance().makeFromBase64DataString(Context.getInstance().getUser().getImageBase64()));
+        System.out.println("IP: " +Context.getInstance().getUser().getIp());
+        Context.getInstance().setServerThread(
+                new ServerThread(
+                        Context.getInstance().getUser().getPort() == 0 ?
+                                new Server() :
+                                new Server(Context.getInstance().getUser().getPort())
+                )
+        );
+        Context.getInstance().getServerThread().getServer().addObserver(this);
+        Context.getInstance().getServerThread().start();
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if(arg instanceof Message){
+
             Platform.runLater(() -> {
-                System.out.println("received or sent msg");
-                messagesClient.add(((Message) arg).getContent());
+                String message = ((Message)arg).getContent();
+                if(o instanceof Client){
+                    message = "<"+message;
+                }else if(o instanceof Server){
+                    message = ">"+message;
+                }
+                messagesClient.add(message);
             });
-        }else
+        }else if(arg instanceof String)
             Platform.runLater(() -> {
                 messagesServer.add(((String) arg));
             });
+        else if(arg instanceof User)
+            Platform.runLater(()->{
+                User friend = (User) arg;
+                nomAmi.setText(friend.getNom());
+                avatarAmi.setImage(Base64ImageFactory.getInstance().makeFromBase64DataString(friend.getImageBase64()));
+            });
 
-    }
-
-    public void setServer(Server server){
-        this.server = server;
     }
 
 }

@@ -70,24 +70,17 @@ public class Message implements Serializable {
     // WHOISIN to receive the list of the users connected
     // MESSAGE an ordinary message
     // LOGOUT to disconnect from the MyServer
-    public static final int WHOISIN = 0, MESSAGE = 1, LOGOUT = 2, FILE = 3;
-    private int type;
-    private String content,filename;
+    private String ip;
+    private String content;
 
 
-    public Message(int type, String content) {
-        this.type = type;
+    public Message(String ip, String content) {
         this.content = content;
     }
 
-    public int getType() {
-        return type;
-    }
     public String getContent() {
         return content;
     }
-    public String getFilename(){
-        return filename;
-    }
+    public String getIp(){return ip;}
 
 }

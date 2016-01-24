@@ -6,10 +6,16 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import model.Base64Image;
+import model.Base64ImageFactory;
+import model.Context;
 import model.LocatedImage;
 
+import javax.xml.bind.DatatypeConverter;
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -60,7 +66,12 @@ public class DraggableImageController implements Initializable{
             boolean success = false;
             if (db.hasUrl()) {
                 System.out.println(db.getUrl());
-                imageView.setImage(new LocatedImage(db.getUrl()));
+                String urlOrData = db.getUrl();
+                if(urlOrData.startsWith("data")){
+                    imageView.setImage(Base64ImageFactory.getInstance().makeFromBase64DataString(urlOrData));
+                }else{
+                    imageView.setImage(Base64ImageFactory.getInstance().makeFromURL(urlOrData));
+                }
                 success = true;
             }else if (db.hasFiles()){
                 System.out.println(db.getFiles().get(0).getAbsolutePath());
@@ -77,7 +88,6 @@ public class DraggableImageController implements Initializable{
         void dragEntered(DragEvent  event) {
 
             /* the drag-and-drop gesture entered the target */
-            System.out.println(event.getDragboard().hasFiles());
                 /* show to the user that it is an actual gesture target */
             if (event.getGestureSource() != imageView &&(
                     event.getDragboard().hasString() || event.getDragboard().hasFiles())) {
@@ -115,7 +125,6 @@ public class DraggableImageController implements Initializable{
         }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
 }
 
