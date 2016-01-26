@@ -27,10 +27,11 @@ public class Server extends Observable {
     }
 
     public Server() {
-        this.port = getPortFromProperties();
+        this.port = Context.getInstance().getPort();
     }
 
     public Server(int port){
+        Context.getInstance().setPort(port);
         this.port = port;
     }
     public void start(){
@@ -64,23 +65,7 @@ public class Server extends Observable {
         }
     }
 
-    private int getPortFromProperties() {
-        Properties properties = new Properties();
-        InputStream in = null;
-        try {
-            in = getClass().getResourceAsStream("conf.txt");
-            properties.load(in);
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                in.close();
-            } catch (IOException | NullPointerException e) {
-                e.printStackTrace();
-            }
-        }
-        return Integer.valueOf(properties.getProperty("port"));
-    }
+
 
     public void close() {
         try {

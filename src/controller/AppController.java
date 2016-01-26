@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import model.Base64ImageFactory;
 import model.Context;
 import model.Server;
 
@@ -40,6 +41,7 @@ public class AppController extends Application implements Initializable {
         loadCreateUser(primaryStage);
 
         primaryStage.setOnCloseRequest(AppController::close);
+        primaryStage.getIcons().add(Base64ImageFactory.getInstance().makeFromBase64DataString(Context.getInstance().getAppIcon()));
 
     }
     private static void close(WindowEvent event){
