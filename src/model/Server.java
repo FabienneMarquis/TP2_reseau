@@ -1,11 +1,12 @@
 package model;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import javax.xml.bind.DatatypeConverter;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Properties;
 
@@ -99,6 +100,7 @@ public class Server extends Observable {
         if (!clientSocket.isClosed()) {
             try {
                 outputStream.writeObject(message);
+                outputStream.flush();
                 setChanged();
                 notifyObservers(message);
             } catch (IOException e) {
@@ -164,8 +166,47 @@ public class Server extends Observable {
     private void sendUserInfo(){
         try{
             outputStream.writeObject(Context.getInstance().getUser());
+            outputStream.flush();
         }catch (IOException e){
             System.out.println("ERROR: connection");
+        }
+
+    }
+
+    public void sendFile(File file){
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            byte[] buffer = new byte[1024];
+            while (true) {
+                int r;
+                try{
+                    r = fileInputStream.read(buffer);
+                }catch (IOException e){
+                    break;
+                }
+
+                if (r == -1) break;
+                out.write(buffer, 0, r);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+
+        byte[] ret = out.toByteArray();
+
+        String base64 = DatatypeConverter.printBase64Binary(ret);
+
+        String filename = file.toPath().getFileName().toString();
+        try {
+            outputStream.writeObject(new FileMessage(Context.getInstance().getUser().getIp(),base64,filename));
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

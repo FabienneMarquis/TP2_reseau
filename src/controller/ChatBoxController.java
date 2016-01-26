@@ -8,10 +8,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 import model.*;
 
+import javax.xml.bind.DatatypeConverter;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -58,8 +64,7 @@ public class ChatBoxController implements Initializable, Observer{
     @FXML
     private Button btnQuitter;
 
-    @FXML
-    private TextField fichierSource;
+
 
     @FXML
     private Button btnEnvoyerFichier;
@@ -74,15 +79,7 @@ public class ChatBoxController implements Initializable, Observer{
     @FXML
     void connection(ActionEvent event) {
         System.out.println("wut?");
-//        if(client == null){
-//            new Thread(()->{
-//                User friend = );
-//                client = new Client(friend);
-//                client.addObserver(this);
-//                client.reconnect();
-//            }).start();
-//
-//        }
+
         clientThread = new ClientThread(new User(ipDistant.getText(), Integer.valueOf(portDistant.getText())));
         clientThread.getClient().addObserver(this);
         clientThread.start();
@@ -91,7 +88,15 @@ public class ChatBoxController implements Initializable, Observer{
 
     @FXML
     void envoyerFichierSource(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("select your file");
 
+        File file = fileChooser.showOpenDialog(((Button)event.getSource()).getScene().getWindow());
+        if (Context.getInstance().getServerThread().getServer().hasConnection()){
+            Context.getInstance().getServerThread().getServer().sendFile(file);
+        }
+        else if(clientThread.getClient().isConnected())
+            clientThread.getClient().sendFile(file);
     }
 
     @FXML
@@ -132,7 +137,13 @@ public class ChatBoxController implements Initializable, Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if(arg instanceof Message){
+        if(arg instanceof FileMessage)
+            Platform.runLater(()->{
+                FileMessage fileMessage = (FileMessage) arg;
+                fileMessage.writeFile();
+                messagesClient.add("fichier reçu:" + fileMessage.getFilename());
+            });
+        else if(arg instanceof Message){
 
             Platform.runLater(() -> {
                 String message = ((Message)arg).getContent();

@@ -121,7 +121,6 @@
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label text="Fichier à envoyer: " />
-                  <TextField fx:id="fichierSource" />
                   <Button fx:id="btnEnvoyerFichier" mnemonicParsing="false" onAction="#envoyerFichierSource" text="Envoyer Fichier" />
                </children></HBox>
          </children>

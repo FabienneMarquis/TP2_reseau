@@ -1,7 +1,11 @@
 package model;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.Observable;
 
 /**
@@ -81,6 +85,7 @@ public class Client extends Observable{
             try {
                 System.out.println(user.getNom());
                 outputStream.writeObject(user);
+                outputStream.flush();
             } catch (IOException e) {
                 System.out.println("outputStream closed");
                 disconnected();
@@ -92,6 +97,7 @@ public class Client extends Observable{
             try {
                 System.out.println(message.getContent());
                 outputStream.writeObject(message);
+                outputStream.flush();
                 setChanged();
                 notifyObservers(message);
             } catch (IOException e) {
@@ -147,5 +153,41 @@ public class Client extends Observable{
         setChanged();
         notifyObservers(object);
     }
+    public void sendFile(File file){
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
 
+            byte[] buffer = new byte[1024];
+            while (true) {
+                int r;
+                try{
+                    r = fileInputStream.read(buffer);
+                }catch (IOException e){
+                    break;
+                }
+
+                if (r == -1) break;
+                out.write(buffer, 0, r);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+
+
+        byte[] ret = out.toByteArray();
+
+        String base64 = DatatypeConverter.printBase64Binary(ret);
+
+        String filename = file.toPath().getFileName().toString();
+        try {
+            outputStream.writeObject(new FileMessage(Context.getInstance().getUser().getIp(),base64,filename));
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
