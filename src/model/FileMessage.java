@@ -8,8 +8,8 @@ import java.io.*;
  */
 public class FileMessage extends Message{
     private String filename;
-    public FileMessage(String ip, String content,String filename) {
-        super(ip, content);
+    public FileMessage(String ip,int port, String content,String filename) {
+        super(ip,port, content);
         this.filename = filename;
     }
     public String getFilename(){
@@ -59,7 +59,8 @@ public class FileMessage extends Message{
         int id = 0;
         while (tmp.exists()){
             id++;
-            tmp = new File(dir,filenameWithoutExt+id+"."+ext);
+            filename = filenameWithoutExt+id+"."+ext;
+            tmp = new File(dir,filename);
         }
         if(!tmp.exists()){
             try {

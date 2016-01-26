@@ -2,6 +2,8 @@ package model;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Properties;
 
 /**
@@ -9,12 +11,13 @@ import java.util.Properties;
  */
 public class Context {
     private static Context context;
-    private User user;
+    private User user,friend;
     private ServerThread serverThread;
     private ClientThread clientThread;
     private String defaultPicture = "";
     private final String DEFAULT_PICTURE = "default_picture";
     private int port;
+    private String ip;
     private final String PORT = "port";
     private String appIcon ="";
     private final String APP_ICON = "app_icon";
@@ -37,6 +40,14 @@ public class Context {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public User getFriend() {
+        return friend;
+    }
+
+    public void setFriend(User friend) {
+        this.friend = friend;
     }
 
     public ServerThread getServerThread() {
@@ -63,10 +74,21 @@ public class Context {
     }
 
     public int getPort() {
-        if(port== 0){
+        if(port == 0){
             port = getPortFromProperties();
         }
         return port;
+    }
+
+    public String getIp() {
+        if(ip == null){
+            try {
+                ip = InetAddress.getLocalHost().getHostAddress();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+        }
+        return ip;
     }
 
     public String getAppIcon(){
@@ -77,6 +99,7 @@ public class Context {
     }
 
     public void setPort(int port) {
+        System.out.println(port);
         this.port = port;
     }
 

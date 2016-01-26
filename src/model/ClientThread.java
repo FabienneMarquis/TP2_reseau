@@ -9,7 +9,7 @@ public class ClientThread extends Thread{
         client = new Client(user);
     }
     public void run(){
-        client.reconnect();
+        client.start();
     }
     public void sendMsg(Message msg){
         client.sendMessage(msg);

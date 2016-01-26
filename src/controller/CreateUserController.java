@@ -40,22 +40,16 @@ public class CreateUserController implements Initializable {
     @FXML
     void accept(ActionEvent event) {
         if(!usernamefield.getText().isEmpty() ){
-            String ip = "";
-            try{
-                ip = InetAddress.getLocalHost().getHostAddress();
-            }catch (UnknownHostException e){
-                e.printStackTrace();
-            }
             int port = 0;
             try{
                 port = Integer.valueOf(portfield.getText());
             }catch (Exception e){
                 // portfield is not an int or is empty
             }
-            if(port == 0 || ip.length() == 0)
-                Context.getInstance().setUser(new User(usernamefield.getText(),((Base64Image)image.getImage()).getBase64()));
-            else
-                Context.getInstance().setUser(new User(usernamefield.getText(),((Base64Image)image.getImage()).getBase64(),ip ,port));
+            if(port != 0){
+                Context.getInstance().setPort(port);
+            }
+            Context.getInstance().setUser(new User(usernamefield.getText(),((Base64Image)image.getImage()).getBase64(),Context.getInstance().getIp(),Context.getInstance().getPort()));
 
             loadChatBox(stage);
         }
