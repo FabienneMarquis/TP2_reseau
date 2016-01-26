@@ -7,24 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1bb13797-688b-4e7c-a513-74a7d8f838f5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/view/default.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Base64Image.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/model/Base64ImageFactory.java" />
-      <change type="DELETED" beforePath="D:\IdeaProjects\TP2_reseau\src\model\EnvoitImage.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\IdeaProjects\TP2_reseau\src\model\MyServer.java" afterPath="" />
-      <change type="DELETED" beforePath="D:\IdeaProjects\TP2_reseau\src\model\TutorialClient.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/AppController.java" afterPath="$PROJECT_DIR$/src/controller/AppController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/ChatBoxController.java" afterPath="$PROJECT_DIR$/src/controller/ChatBoxController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Client.java" afterPath="$PROJECT_DIR$/src/model/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Context.java" afterPath="$PROJECT_DIR$/src/model/Context.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/CreateUserController.java" afterPath="$PROJECT_DIR$/src/controller/CreateUserController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/DraggableImage.fxml" afterPath="$PROJECT_DIR$/src/view/DraggableImage.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/controller/DraggableImageController.java" afterPath="$PROJECT_DIR$/src/controller/DraggableImageController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/LocatedImage.java" afterPath="$PROJECT_DIR$/src/model/LocatedImage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Message.java" afterPath="$PROJECT_DIR$/src/model/Message.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/model/Server.java" afterPath="$PROJECT_DIR$/src/model/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/chatBox.fxml" afterPath="$PROJECT_DIR$/src/view/chatBox.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/view/createUser.fxml" afterPath="$PROJECT_DIR$/src/view/createUser.fxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TP2_FM_GP.iws" />
@@ -60,8 +42,8 @@
       <file leaf-file-name="CreateUserController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/controller/CreateUserController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32894737">
-              <caret line="66" column="36" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
+            <state vertical-scroll-proportion="0.3848684">
+              <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -642,7 +624,13 @@
       <option name="project" value="LOCAL" />
       <updated>1453389495982</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="more work done! now you know who sent you msgs and now you know his name and profile picture">
+      <created>1453656516146</created>
+      <option name="number" value="00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1453656516146</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -692,7 +680,8 @@
     <MESSAGE value="Merge branch 'FabInterfacePouette' of https://github.com/FabienneMarquis/TP2_reseau&#10;&#10;Conflicts:&#10;&#9;.idea/workspace.xml&#10;" />
     <MESSAGE value="god damnit... the connection doesnt work yet.. bummer" />
     <MESSAGE value="first sloppy sprint is done. Two computers can exchange messages." />
-    <option name="LAST_COMMIT_MESSAGE" value="first sloppy sprint is done. Two computers can exchange messages." />
+    <MESSAGE value="more work done! now you know who sent you msgs and now you know his name and profile picture" />
+    <option name="LAST_COMMIT_MESSAGE" value="more work done! now you know who sent you msgs and now you know his name and profile picture" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -920,9 +909,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="126" column="68" selection-start-line="126" selection-start-column="68" selection-end-line="126" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -969,7 +956,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="24" column="67" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1076,8 +1063,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/controller/CreateUserController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32894737">
-          <caret line="66" column="36" selection-start-line="66" selection-start-column="36" selection-end-line="66" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.3848684">
+          <caret line="68" column="5" selection-start-line="68" selection-start-column="5" selection-end-line="68" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
