@@ -6,18 +6,23 @@ import java.net.Socket;
 import java.util.Observable;
 
 /**
- * Created by 0940135 on 2016-01-26.
+ * this abstract class deal with the shared functionnality of the Server and the Client
+ * @author Gabriel_Fabienne
  */
 public abstract class SocketManager extends Observable {
     protected Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    public static String CONNECT = "connect";
 
 
     public SocketManager() {
 
     }
 
+    /**
+     * Method that need to be written for the Client or the Server
+     */
     public abstract void start();
 
     protected void openStreams() throws IOException {
@@ -25,10 +30,17 @@ public abstract class SocketManager extends Observable {
         inputStream = new ObjectInputStream(socket.getInputStream());
     }
 
+    /**
+     * Close the sockets and the streams
+     */
     public void close() {
         disconnected();
     }
 
+    /**
+     * Send the User Object by the OutputStream if a error occurs we close the connection.
+     * @param user
+     */
     public void sendUserInfo(User user) {
         if (isConnected()) {
             try {
@@ -40,6 +52,10 @@ public abstract class SocketManager extends Observable {
         }
     }
 
+    /**
+     * Send a Message Object by the OutputStream if an error occurs we close the connection.
+     * @param message
+     */
     public void sendMessage(Message message) {
         if (isConnected()) {
             try {
@@ -96,6 +112,10 @@ public abstract class SocketManager extends Observable {
         display("DISCONNECTED");
     }
 
+    /**
+     *
+     * @return true if the socket is connected
+     */
     public boolean isConnected() {
         return socket!=null?socket.isConnected():false;
     }
@@ -106,6 +126,10 @@ public abstract class SocketManager extends Observable {
         notifyObservers(object);
     }
 
+    /**
+     * Send a file via the Sockets by reading it and making a FileMessage and writing to the socket
+     * @param file
+     */
     public void sendFile(File file) {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         try {

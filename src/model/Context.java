@@ -7,7 +7,9 @@ import java.net.UnknownHostException;
 import java.util.Properties;
 
 /**
- * Created by 0940135 on 2016-01-21.
+ * Context est une classe qui sert pour contenir toute les informations specifique pour le fonctionnement de l'
+ * application. Conntext est accesssible partout dans l'application par l'usage d'un singleton.
+ * @author Gabriel_Fabienne
  */
 public class Context {
     private static Context context;
@@ -27,6 +29,10 @@ public class Context {
 
     }
 
+    /**
+     * Get instance du singleton
+     * @return instance unique
+     */
     public static Context getInstance(){
         if(context == null){
             context = new Context();
@@ -34,38 +40,74 @@ public class Context {
         return context;
     }
 
+    /**
+     * Get User
+     * @return le user
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Set User
+     * @param user
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Get Friend
+     * @return friend
+     */
     public User getFriend() {
         return friend;
     }
 
+    /**
+     * set friend
+     * @param friend
+     */
     public void setFriend(User friend) {
         this.friend = friend;
     }
 
+    /**
+     * get serveur thread
+     * @return
+     */
     public ServerThread getServerThread() {
         return serverThread;
     }
 
+    /**
+     * set server thread
+     * @param serverThread
+     */
     public void setServerThread(ServerThread serverThread) {
         this.serverThread = serverThread;
     }
 
+    /**
+     * get client thread
+     * @return
+     */
     public ClientThread getClientThread() {
         return clientThread;
     }
 
+    /**
+     * set client Thread
+     * @param clientThread
+     */
     public void setClientThread(ClientThread clientThread) {
         this.clientThread = clientThread;
     }
 
+    /**
+     * get default picture either from properties or return the custom value
+     * @return defaultPicture
+     */
     public String getDefaultPicture(){
         if(defaultPicture.length() == 0){
             defaultPicture = getDefaultPictureFromProperties();
@@ -73,6 +115,10 @@ public class Context {
         return defaultPicture;
     }
 
+    /**
+     * return Port from properties if 0 or else the custom value
+     * @return port
+     */
     public int getPort() {
         if(port == 0){
             port = getPortFromProperties();
@@ -80,6 +126,10 @@ public class Context {
         return port;
     }
 
+    /**
+     * Return local ip if null or the value set
+     * @return
+     */
     public String getIp() {
         if(ip == null){
             try {
@@ -91,6 +141,10 @@ public class Context {
         return ip;
     }
 
+    /**
+     * return the app icon if null or the value set
+     * @return
+     */
     public String getAppIcon(){
         if(appIcon.length() == 0){
             appIcon = getAppIconFromProperties();
@@ -98,6 +152,10 @@ public class Context {
         return appIcon;
     }
 
+    /**
+     * set the port
+     * @param port
+     */
     public void setPort(int port) {
         System.out.println(port);
         this.port = port;

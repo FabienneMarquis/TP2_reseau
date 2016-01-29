@@ -22,7 +22,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
- * Created by 1494778 on 2016-01-14.
+ * Controlleur principale pour l'application
+ * @author Gabriel_Fabienne
  */
 public class AppController extends Application implements Initializable {
 
@@ -36,6 +37,11 @@ public class AppController extends Application implements Initializable {
         launch(args);
     }
 
+    /**
+     * Javafx Start method
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         loadCreateUser(primaryStage);
@@ -85,7 +91,11 @@ public class AppController extends Application implements Initializable {
 
     }
 
-
+    /**
+     * Initialize pour ce controlleur
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

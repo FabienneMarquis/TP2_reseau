@@ -5,10 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.*;
@@ -19,6 +22,10 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
+/**
+ * Controlleur de la fenettre de creation de l'usager
+ * @author Gabriel_Fabienne
+ */
 public class CreateUserController implements Initializable {
 
     @FXML
@@ -44,7 +51,11 @@ public class CreateUserController implements Initializable {
             try{
                 port = Integer.valueOf(portfield.getText());
             }catch (Exception e){
-                // portfield is not an int or is empty
+                 Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Avertissement");
+                alert.setHeaderText("Port invalide");
+                alert.setContentText(" Port est invalide. Default utiliser ");
+                alert.showAndWait();
             }
             if(port != 0){
                 Context.getInstance().setPort(port);
@@ -62,9 +73,14 @@ public class CreateUserController implements Initializable {
         ((Button)event.getSource()).getScene().getWindow().fireEvent(new WindowEvent(null, WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
+    /**
+     * Setteur pour le stage
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+
     private void loadChatBox(Stage primaryStage) {
         String path = "/view/chatBox.fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
@@ -89,10 +105,13 @@ public class CreateUserController implements Initializable {
 
     }
 
+    /**
+     * Initialize method for this controler
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        image.setImage(Base64ImageFactory.getInstance().makeFromBase64DataString(Context.getInstance().getDefaultPicture()));
 
     }
 }

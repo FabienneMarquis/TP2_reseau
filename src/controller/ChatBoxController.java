@@ -23,7 +23,8 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 /**
- * Created by 1494778 on 2016-01-14.
+ * Controlleur de la Chat box
+ * @author Gabriel_Fabienne
  */
 public class ChatBoxController implements Initializable, Observer {
 
@@ -78,7 +79,7 @@ public class ChatBoxController implements Initializable, Observer {
 
     @FXML
     void connection(ActionEvent event) {
-        
+
         clientThread = new ClientThread(new User(ipDistant.getText(), Integer.valueOf(portDistant.getText())));
         clientThread.getClient().addObserver(this);
         clientThread.start();
@@ -156,14 +157,21 @@ public class ChatBoxController implements Initializable, Observer {
                 messagesClient.add(txt);
             });
         } else if (arg instanceof String)
-            Platform.runLater(() -> {
-                messagesServer.add(((String) arg));
-            });
+            if (((String) arg).equals(SocketManager.CONNECT)) {
+                btnConnection.setDisable(true);
+                ipDistant.setDisable(true);
+                portDistant.setDisable(true);
+            } else
+                Platform.runLater(() -> {
+                    messagesServer.add(((String) arg));
+                });
         else if (arg instanceof User)
             Platform.runLater(() -> {
                 User friend = (User) arg;
                 nomAmi.setText(friend.getNom());
                 avatarAmi.setImage(Base64ImageFactory.getInstance().makeFromBase64DataString(friend.getImageBase64()));
+                ipDistant.setText(friend.getIp());
+                portDistant.setText(String.valueOf(friend.getPort()));
             });
 
     }

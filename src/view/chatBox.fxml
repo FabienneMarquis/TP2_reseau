@@ -50,7 +50,7 @@
                         <Insets />
                      </VBox.margin>
                   </Label>
-                  <TextField fx:id="nomUtilisateur">
+                  <TextField fx:id="nomUtilisateur" editable="false">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -62,6 +62,9 @@
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                   </Pane>
                </children>
             </VBox>
@@ -72,7 +75,7 @@
             </ListView>
             <VBox alignment="TOP_CENTER" prefHeight="271.0" prefWidth="110.0">
                <children>
-                  <TextField fx:id="nomAmi" />
+                  <TextField fx:id="nomAmi" editable="false" />
                   <Pane minHeight="124.0" minWidth="156.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="124.0" prefWidth="156.0" styleClass="borders">
                      <children>
                         <ImageView fx:id="avatarAmi" fitHeight="124.0" fitWidth="156.0" layoutX="-6.0" pickOnBounds="true" preserveRatio="true" />

@@ -4,17 +4,36 @@ import javax.xml.bind.DatatypeConverter;
 import java.io.*;
 
 /**
- * Created by 0940135 on 2016-01-26.
+ * FileMessage is a class extending Message that is used
+ * to send file information and content via socket
+ * @author Gabriel_Fabienne
  */
 public class FileMessage extends Message{
     private String filename;
+
+    /**
+     * Constructor that build the FileMessage
+     * @param ip
+     * @param port
+     * @param content
+     * @param filename
+     */
     public FileMessage(String ip,int port, String content,String filename) {
         super(ip,port, content);
         this.filename = filename;
     }
+
+    /**
+     * getter
+     * @return filename
+     */
     public String getFilename(){
         return filename;
     }
+
+    /**
+     * Method that write the file on the user file system
+     */
     public void writeFile(){
         ByteArrayInputStream bis = new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(this.getContent()));
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

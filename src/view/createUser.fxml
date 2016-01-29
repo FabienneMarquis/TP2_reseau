@@ -14,7 +14,7 @@
       </Label>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="acceptBtn" mnemonicParsing="false" onAction="#accept" text="Accept">
                <HBox.margin>
@@ -27,30 +27,51 @@
                </HBox.margin>
             </Button>
          </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
       </HBox>
    </bottom>
    <center>
-      <GridPane BorderPane.alignment="CENTER">
+      <GridPane prefHeight="313.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="184.0" minHeight="0.0" prefHeight="166.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="177.0" minHeight="0.0" prefHeight="49.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="184.0" minHeight="0.0" prefHeight="171.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="177.0" minHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Pane maxHeight="150.0" maxWidth="150.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="borders" GridPane.columnIndex="1">
+            <Pane maxHeight="200.0" maxWidth="200.0" minHeight="150.0" minWidth="150.0" prefHeight="150.0" prefWidth="150.0" styleClass="borders" GridPane.columnIndex="1">
                <children>
                   <fx:include fx:id="image" source="DraggableImage.fxml" />
                </children>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
             </Pane>
-            <Label text="Username" GridPane.rowIndex="1" />
-            <TextField fx:id="usernamefield" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label text="Profile Picture (drag and drop picture on the field)" />
-            <Label text="Port (optional)" GridPane.rowIndex="2" />
-            <TextField fx:id="portfield" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Username" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="usernamefield" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin></TextField>
+            <Label text="Profile Picture (drag and drop picture on the field)">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+            <Label text="Port (optional)" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+            <TextField fx:id="portfield" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="20.0" right="20.0" />
+               </GridPane.margin></TextField>
          </children>
       </GridPane>
    </center>

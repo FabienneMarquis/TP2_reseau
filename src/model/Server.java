@@ -13,20 +13,38 @@ import java.util.Observable;
 import java.util.Properties;
 
 /**
- * Created by 0940135 on 2016-01-20.
+ * Server manage all that have to do with the server side aspect of the connection between sockets
+ * it extends SocketManage that does most of the heavy lifting
+ * @author Gabriel_Fabienne
  */
 public class Server extends SocketManager {
     private ServerSocket serverSocket;
     private int port;
 
+    /**
+     * Constructor that build the server by getting the port from the context singleton
+     */
     public Server() {
         this.port = Context.getInstance().getPort();
     }
 
+    /**
+     * Construct the server by using the port provided as an argument.
+     * @param port
+     */
     public Server(int port){
         Context.getInstance().setPort(port);
         this.port = port;
     }
+
+    /**
+     * Overrided start method of SocketManager
+     * it start the serverSocket from the port
+     * and wait for a socket to connect to it
+     * and then open the streams
+     * send the user information
+     * and advice the listeners that it is now connected and has a socket connected to it
+     */
     @Override
     public void start(){
         try {
@@ -43,6 +61,7 @@ public class Server extends SocketManager {
                 display("Client connected from " + socket.getInetAddress().getHostAddress());
                 sendUserInfo(Context.getInstance().getUser());
                 startListening();
+                display(SocketManager.CONNECT);
 
             } catch (Exception e) {
                 display("Exception creating new Input/output Streams: " + e);
