@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author Gabriel_Fabienne
  */
 public class User implements Serializable {
+    protected static final long serialVersionUID = 1112122200L;
     private String nom,imageBase64,ip;
     private int port;
 
@@ -22,6 +23,7 @@ public class User implements Serializable {
         this.imageBase64 = imageBase64;
         this.ip = ip;
         this.port = port;
+        System.out.println("creating user with image");
     }
 
     /**

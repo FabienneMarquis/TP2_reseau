@@ -59,8 +59,10 @@ public class Server extends SocketManager {
             try {
                 openStreams();
                 display("Client connected from " + socket.getInetAddress().getHostAddress());
-                sendUserInfo(Context.getInstance().getUser());
+
+                System.out.println("wtf?");
                 startListening();
+                sendUserInfo(Context.getInstance().getUser());
                 display(SocketManager.CONNECT);
 
             } catch (Exception e) {

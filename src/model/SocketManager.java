@@ -27,6 +27,7 @@ public abstract class SocketManager extends Observable {
 
     protected void openStreams() throws IOException {
         outputStream = new ObjectOutputStream(socket.getOutputStream());
+        outputStream.flush();
         inputStream = new ObjectInputStream(socket.getInputStream());
     }
 
@@ -44,6 +45,8 @@ public abstract class SocketManager extends Observable {
     public void sendUserInfo(User user) {
         if (isConnected()) {
             try {
+                System.out.println(user.getImageBase64());
+                //outputStream.flush();
                 outputStream.writeObject(user);
                 outputStream.flush();
             } catch (IOException e) {
@@ -60,6 +63,7 @@ public abstract class SocketManager extends Observable {
         if (isConnected()) {
             try {
                 System.out.println(message.getContent());
+                //outputStream.flush();
                 outputStream.writeObject(message);
                 outputStream.flush();
                 setChanged();
@@ -75,12 +79,12 @@ public abstract class SocketManager extends Observable {
 
         new Thread(() -> {
             while (!socket.isClosed()) {
-
                 try {
                     System.out.println("client received msg");
                     Object object = (Object) inputStream.readObject();
                     if(object instanceof User){
-                        Context.getInstance().setFriend((User)object);
+                        System.out.println("Friend: " + ((User) object).getNom());
+                        Context.getInstance().setFriend((User) object);
                     }
                     display(object);
                 } catch (IOException e) {
@@ -88,6 +92,7 @@ public abstract class SocketManager extends Observable {
                     disconnected();
                 } catch (ClassNotFoundException e) {
                     // Not much to do...
+                    System.out.println("class not found");
                 }
 
             }

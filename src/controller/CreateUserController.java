@@ -112,6 +112,9 @@ public class CreateUserController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        image.fitWidthProperty().bind(((Pane)image.getParent()).widthProperty());
+        image.fitHeightProperty().bind(((Pane)image.getParent()).heightProperty());
+        image.preserveRatioProperty().setValue(false);
+        image.setImage(Base64ImageFactory.getInstance().makeFromBase64DataString(Context.getInstance().getDefaultPicture()));
     }
 }

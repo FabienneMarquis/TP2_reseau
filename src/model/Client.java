@@ -45,8 +45,8 @@ public class Client extends SocketManager{
         try {
             socket = new Socket(user.getIp(), user.getPort());
             openStreams();
-            sendUserInfo(Context.getInstance().getUser());
             startListening();
+            sendUserInfo(Context.getInstance().getUser());
             display(SocketManager.CONNECT);
 
             String msg = "Client accepted " + socket.getInetAddress() + ":" + socket.getPort();
